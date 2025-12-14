@@ -1,0 +1,29 @@
+name: CI Pipeline
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Source Checkout
+      uses: actions/checkout@v3
+
+    - name: Build
+      run: gcc main.c -o app
+
+    - name: Test
+      run: bash test.sh
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifact
+        path: app
+
+    - name: Simulated Deploy
+      env:
+        DEPLOY_API_KEY: ${{ secrets.DEPLOY_API_KEY }}
+      run: |
+        echo "Deploying using API Key: $DEPLOY_API_KEY"
