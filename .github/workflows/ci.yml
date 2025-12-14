@@ -13,8 +13,11 @@ jobs:
     - name: Build
       run: gcc main.c -o app
 
+    - name: Make test script executable
+      run: chmod +x test.sh
+
     - name: Test
-      run: bash test.sh
+      run: ./test.sh
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
